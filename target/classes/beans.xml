@@ -83,5 +83,8 @@
 		<aop:pointcut expression="execution(* *..*Service.*(..))" id="txPointCut"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="txPointCut" order="1"/>
 	</aop:config>
-           
+	
+	<!-- 配置缓存 -->
+	<import resource="classpath:spring-cache.xml"/>
+	
 </beans>

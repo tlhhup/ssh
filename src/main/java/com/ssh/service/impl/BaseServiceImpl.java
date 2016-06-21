@@ -3,6 +3,8 @@ package com.ssh.service.impl;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
+import org.springframework.cache.annotation.Cacheable;
+
 import com.ssh.dao.BaseDao;
 import com.ssh.service.BaseService;
 
@@ -72,12 +74,14 @@ public class BaseServiceImpl<T> implements BaseService<T> {
 		return dao.getUniqueResult(hql, objects);
 	}
 
+	@Cacheable("serviceCache")
 	@Override
 	public List<T> getAllEntity() {
 		String hql="from "+this.clazz.getSimpleName();
 		return dao.getEntityByHQL(hql);
 	}
 
+	@Cacheable("serviceCache")
 	@Override
 	public List<T> findEntityBySQl(String sql, Object... objects) {
 		return dao.findEntityBySQl(sql, objects);

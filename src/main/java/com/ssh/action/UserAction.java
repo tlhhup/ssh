@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.ssh.entity.User;
 import com.ssh.service.UserService;
 
@@ -22,7 +22,7 @@ public class UserAction extends BaseAction<User> {
 
 	public String index() {
 		List<User> users = userService.getAllEntity();
-		ServletActionContext.getRequest().setAttribute("users", users);
+		ActionContext.getContext().put("users", users);
 		return "users";
 	}
 

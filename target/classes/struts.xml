@@ -7,16 +7,16 @@
 	<constant name="struts.ui.theme" value="simple" />
 	<!-- 将action的创建即维护交由spring控制 -->
 	<constant name="struts.objectFactory" value="spring" />
-	<!-- 允许动态调用 -->
-	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 	<!-- 允许调用静态方法 -->
 	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
 	<!-- 开发模式下使用,这样可以打印出更详细的错误信息 -->
-	<constant name="struts.devMode" value="false" />
+	<constant name="struts.devMode" value="true" />
 	<!-- 当struts的配置文件修改后,系统是否自动重新加载该文件,默认值为false(生产环境下使用),开发阶段最好打开 -->
 	<constant name="struts.configuration.xml.reload" value="true" />
 
 	<package name="test" namespace="/" extends="struts-default">
-		
+		<action name="userAction_*" class="userAction" method="{1}">
+		    <result name="users">/WEB-INF/pages/userindex.jsp</result>
+		</action>
 	</package>
 </struts>
