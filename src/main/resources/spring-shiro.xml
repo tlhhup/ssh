@@ -15,13 +15,13 @@
 	<!-- 配置 Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/login" />
-		<property name="successUrl" value="/user/list" />
-		<property name="unauthorizedUrl" value="/login" />
+		<property name="loginUrl" value="/LoginAction_login" />
+		<property name="successUrl" value="/userAction_index" />
+		<property name="unauthorizedUrl" value="/LoginAction_login" />
 		<property name="filterChainDefinitions">
 		    <!-- 每个URL配置，表示匹配该URL的应用程序请求将由对应的过滤器进行验证。  -->
 			<value>
-				/login = anon
+				/LoginAction_login = anon
 				/user/edit = perms[user:edit]
 				/user/save = perms[user:edit]
 				/user/index = perms[user:view]
