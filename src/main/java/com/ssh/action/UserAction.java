@@ -25,5 +25,20 @@ public class UserAction extends BaseAction<User> {
 		ActionContext.getContext().put("users", users);
 		return "users";
 	}
+	
+	public String edit(){
+		this.model=userService.get(model.getId());
+		return "edit";
+	}
+	
+	public String update(){
+		this.userService.updateEntity(model);
+		return "userAction";
+	}
+	
+	public String delete(){
+		this.userService.deleteEntity(model);
+		return "userAction";
+	}
 
 }

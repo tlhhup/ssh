@@ -17,6 +17,11 @@
 	<package name="test" namespace="/" extends="struts-default">
 		<action name="userAction_*" class="userAction" method="{1}">
 		    <result name="users">/WEB-INF/pages/userindex.jsp</result>
+		    <result name="edit">/WEB-INF/pages/editUser.jsp</result>
+		    <result name="userAction" type="redirectAction">
+		        <param name="namespace">/</param>
+				<param name="actionName">userAction_index</param>
+		    </result>
 		</action>
 	</package>
 </struts>

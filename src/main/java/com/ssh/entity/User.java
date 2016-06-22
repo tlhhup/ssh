@@ -1,5 +1,7 @@
 package com.ssh.entity;
 
+import java.util.Set;
+
 public class User extends BaseEntity {
 
 	private static final long serialVersionUID = 1L;
@@ -10,7 +12,12 @@ public class User extends BaseEntity {
 	private String email;
 	private String tel;
 	private String address;
+	private boolean isLocked;
 	private char sex;
+
+	private String salt;
+
+	private Set<Role> roles;// 用于与角色的多对多关系
 
 	public int getId() {
 		return id;
@@ -66,6 +73,34 @@ public class User extends BaseEntity {
 
 	public void setSex(char sex) {
 		this.sex = sex;
+	}
+
+	public boolean getIsLocked() {
+		return isLocked;
+	}
+
+	public void setIsLocked(boolean isLocked) {
+		this.isLocked = isLocked;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getCredentialsSalt() {
+		return userName + salt;
 	}
 
 }

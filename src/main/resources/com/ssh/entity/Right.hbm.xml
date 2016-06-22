@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.ssh.entity">
+	<class name="Right" table="rights">
+		<id name="id" column="id">
+			<generator class="identity" />
+		</id>
+		<property name="rightName" column="rightName" type="string" length="150" not-null="true" />
+		<property name="description" column="description" type="string" length="150" not-null="true" />
+		<property name="isAvailable" column="isAvailable" type="boolean" />
+
+	</class>
+</hibernate-mapping>

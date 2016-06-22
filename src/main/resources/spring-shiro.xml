@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+
+	<!-- 配置Realm -->
+	<bean id="userRealm" class="com.ssh.realm.BaseRealm" />
+
+	<!-- 配置SecurityManager -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="userRealm" />
+	</bean>
+
+	<!-- 配置 Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/login" />
+		<property name="successUrl" value="/user/list" />
+		<property name="unauthorizedUrl" value="/login" />
+		<property name="filterChainDefinitions">
+		    <!-- 每个URL配置，表示匹配该URL的应用程序请求将由对应的过滤器进行验证。  -->
+			<value>
+				/login = anon
+				/user/edit = perms[user:edit]
+				/user/save = perms[user:edit]
+				/user/index = perms[user:view]
+				/user/update=perms[user:update]
+				/** = authc
+			</value>
+		</property>
+	</bean>
+</beans>

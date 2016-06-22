@@ -7,11 +7,18 @@
 	    <id name="id" column="id">
 	        <generator class="identity"/>
 	    </id>
-	    <property name="userName" column="username" type="string" length="50" not-null="true"/>
+	    <property name="userName" column="username" type="string" unique="true" length="50" not-null="true"/>
 	    <property name="password" column="password" type="string" length="32" not-null="true"/>
 	    <property name="email" column="email" type="string" length="20"/>
 	    <property name="tel" column="tel" type="string" length="11"/>
 	    <property name="address" column="address" type="string" length="50"/>
 	    <property name="sex" column="sex" type="char" />
+	    <property name="isLocked" column="isLocked" type="boolean" />
+	    
+	    <!-- 与角色的多对多关系 -->
+	    <set name="roles" table="user_role_link">
+        	<key column="userId"/>
+        	<many-to-many class="Role" column="roleId"/>
+        </set>
 	</class>
 </hibernate-mapping>
