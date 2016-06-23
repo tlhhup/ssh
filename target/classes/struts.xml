@@ -23,10 +23,5 @@
 				<param name="actionName">userAction_index</param>
 		    </result>
 		</action>
-		
-		<!-- LoginAction -->
-		<action name="LoginAction_*" class="loginAction" method="{1}">
-		    <result name="login">/WEB-INF/pages/login.jsp</result>
-		</action>
 	</package>
 </struts>

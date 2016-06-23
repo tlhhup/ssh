@@ -8,7 +8,7 @@
 </head>
 <body>
 	<div align="center">
-		<form action="">
+		<form action="" method="post">
 			<table>
 				<caption>用户登录</caption>
 				<tr>

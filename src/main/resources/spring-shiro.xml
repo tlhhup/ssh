@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
-	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd">
+	http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+    http://www.springframework.org/schema/util 
+    http://www.springframework.org/schema/util/spring-util.xsd">
 
 	<!-- 配置Realm -->
 	<bean id="userRealm" class="com.ssh.realm.BaseRealm" />
@@ -12,19 +14,31 @@
 		<property name="realm" ref="userRealm" />
 	</bean>
 
+	<!-- 基于Form表单的身份验证过滤器 -->
+	<bean id="formAuthenticationFilter"
+		class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter">
+		<property name="usernameParam" value="username" />
+		<property name="passwordParam" value="password" />
+		<property name="loginUrl" value="/login.jsp" />
+	</bean>
+
 	<!-- 配置 Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/LoginAction_login" />
-		<property name="successUrl" value="/userAction_index" />
-		<property name="unauthorizedUrl" value="/LoginAction_login" />
+		<property name="loginUrl" value="/login.jsp" />
+		<property name="successUrl" value="/userAction_index"/>
+		<property name="unauthorizedUrl" value="/unauthorized.jsp" />
+		<property name="filters">
+			<util:map>
+				<entry key="authc" value-ref="formAuthenticationFilter" />
+			</util:map>
+		</property>
 		<property name="filterChainDefinitions">
-		    <!-- 每个URL配置，表示匹配该URL的应用程序请求将由对应的过滤器进行验证。  -->
+			<!-- 每个URL配置，表示匹配该URL的应用程序请求将由对应的过滤器进行验证。 -->
 			<value>
-				/LoginAction_login = anon
+				/login.jsp = authc
 				/user/edit = perms[user:edit]
-				/user/save = perms[user:edit]
-				/user/index = perms[user:view]
+				/user/save =perms[user:save]
 				/user/update=perms[user:update]
 				/** = authc
 			</value>
