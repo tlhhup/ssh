@@ -13,6 +13,7 @@ import com.ssh.entity.Right;
 import com.ssh.entity.Role;
 import com.ssh.entity.User;
 import com.ssh.service.UserService;
+import com.ssh.utils.ValidateUtils;
 
 @Service("userService")
 public class UserServiceImpl extends BaseServiceImpl<User> implements UserService {
@@ -27,7 +28,7 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 	public User validateUserInfo(String name,String password) {
 		String hql="from User where userName=? and password=?";
 		List<User> users = this.getEntityByHQL(hql, name,password);
-		return users!=null?users.get(0):null;
+		return ValidateUtils.isValidate(users)?users.get(0):null;
 	}
 
 	@Override

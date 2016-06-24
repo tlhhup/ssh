@@ -11,6 +11,7 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.util.ByteSource;
+import org.springframework.util.DigestUtils;
 
 import com.ssh.entity.User;
 import com.ssh.service.UserService;
@@ -43,9 +44,10 @@ public class BaseRealm extends AuthorizingRealm {
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken arg0) throws AuthenticationException {
 		String userName = (String) arg0.getPrincipal();// 获取身份信息
+		//注意此处获取到的密码凭证信息为数组
 		String password=new String((char[])arg0.getCredentials());
 		// 查询用户的信息
-		User user = userService.validateUserInfo(userName,password);
+		User user = userService.validateUserInfo(userName,DigestUtils.md5DigestAsHex(password.getBytes()));
 		if (user == null) {
 			throw new UnknownAccountException();
 		}

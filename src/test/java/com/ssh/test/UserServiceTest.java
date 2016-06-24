@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.util.DigestUtils;
 
 import com.ssh.entity.Role;
 import com.ssh.entity.User;
@@ -25,8 +26,8 @@ public class UserServiceTest {
 	@Test
 	public void queryUser() {
 		UserService userServices = (UserService) act.getBean("userService");
-		Set<String> roles = userServices.findUserRoles("张三");
-		Set<String> permissions = userServices.findUserPermission("张三");
+		Set<String> roles = userServices.findUserRoles("admin");
+		Set<String> permissions = userServices.findUserPermission("admin");
 		System.out.println("拥有的角色："+roles);
 		System.out.println("拥有的权限："+permissions);
 	}
@@ -54,6 +55,22 @@ public class UserServiceTest {
 		user.setRoles(roles);
 
 		userServices.saveOrupdateEntity(user);
+	}
+	
+	@Test
+	public void update(){
+		UserService userServices = (UserService) act.getBean("userService");
+		User user = userServices.get(6);
+		user.setUserName("lisi");
+		user.setPassword(DigestUtils.md5DigestAsHex("admin".getBytes()));
+		userServices.updateEntity(user);
+	}
+	
+	@Test
+	public void query(){
+		UserService userServices = (UserService) act.getBean("userService");
+		User user = userServices.validateUserInfo("admin", DigestUtils.md5DigestAsHex("admin".getBytes()));
+		System.out.println(user);
 	}
 
 }

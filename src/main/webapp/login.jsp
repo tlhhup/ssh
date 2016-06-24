@@ -7,6 +7,7 @@
 <title>用户登录</title>
 </head>
 <body>
+	${exception.message }
 	<div align="center">
 		<form action="" method="post">
 			<table>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://shiro.apache.org/tags" prefix="shiro" %>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html>
 <html>
@@ -8,6 +9,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+<shiro:user>
+	<shiro:principal/> <a href="${pageContext.request.contextPath }/logout">退出</a>
+</shiro:user>
+
 	<table>
 		<caption>用户列表</caption>
 		<thead>
@@ -32,8 +37,12 @@
 						<!-- 字符的1 对应整数的49 -->
 						<td>${sex eq 49?"男":"女"}</td>
 						<td>
-							<s:a namespace="/" action="userAction_delete?id=%{#id}">删除</s:a>
-							<s:a namespace="/" action="userAction_edit?id=%{#id}">修改</s:a>
+							<shiro:hasPermission name="user:delete">
+								<s:a namespace="/" action="userAction_delete?id=%{#id}">删除</s:a>
+							</shiro:hasPermission>
+							<shiro:hasPermission name="user:edit">
+								<s:a namespace="/" action="userAction_edit?id=%{#id}">修改</s:a>
+							</shiro:hasPermission>
 						</td>
 					</tr>
 				</s:iterator>
